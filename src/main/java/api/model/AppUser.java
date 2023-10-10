@@ -11,9 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
@@ -52,16 +50,14 @@ public class AppUser implements UserDetails {
     return appUserRoles;
   }
 
-
-
   @Override
   public boolean isAccountNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return false;
+    return true;
   }
 
   @Override

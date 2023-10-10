@@ -3,7 +3,6 @@ package api.controller;
 import api.model.AppUser;
 import api.model.AppUserRole;
 import api.service.UserService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class StudentControllerTests {
 
     @BeforeEach
     public void setup() {
-        
+
         adminToken = userService.signup(new AppUser("adminUserName", "Admin@mail.com", "password", true, AppUserRole.ROLE_ADMIN));
         userToken = userService.signup(new AppUser("userUserName", "userUser@mail.com", "password", true, AppUserRole.ROLE_USER));
     }
@@ -50,7 +49,7 @@ public class StudentControllerTests {
     }
 
     @Test
-    public void findStudentByRegisterNotExistsAndNotAuthorizedTest() throws Exception {
+    public void findStudentByRegisterNotAuthorized() throws Exception {
 
         mockMvc.perform(
                         get("/student/000293")
