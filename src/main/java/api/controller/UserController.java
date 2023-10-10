@@ -2,6 +2,7 @@ package api.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import api.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import api.model.AppUser;
 import org.modelmapper.ModelMapper;
@@ -71,22 +72,13 @@ public class UserController {
   @GetMapping(value = "/{username}")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @ApiOperation(value = "${UserController.search}", response = UserResponseDTO.class, authorizations = { @Authorization(value="apiKey") })
-  @ApiResponses(value = {//
-      @ApiResponse(code = 400, message = "Something went wrong"), //
-      @ApiResponse(code = 403, message = "Access denied"), //
-      @ApiResponse(code = 404, message = "The user doesn't exist"), //
-      @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
-  public UserResponseDTO search(@ApiParam("Username") @PathVariable String username) {
-    return modelMapper.map(userService.search(username), UserResponseDTO.class);
+  public UserResponseDTO search(@ApiParam("Username") @PathVariable String username) throws ResourceNotFoundException {
+    return modelMapper.map(userService.findById(username), UserResponseDTO.class);
   }
 
   @GetMapping(value = "/me")
   @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
   @ApiOperation(value = "${UserController.me}", response = UserResponseDTO.class, authorizations = { @Authorization(value="apiKey") })
-  @ApiResponses(value = {//
-      @ApiResponse(code = 400, message = "Something went wrong"), //
-      @ApiResponse(code = 403, message = "Access denied"), //
-      @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
   public UserResponseDTO whoami(HttpServletRequest req) {
     return modelMapper.map(userService.whoami(req), UserResponseDTO.class);
   }

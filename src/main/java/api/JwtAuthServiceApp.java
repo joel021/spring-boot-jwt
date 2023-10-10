@@ -1,7 +1,5 @@
 package api;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import lombok.RequiredArgsConstructor;
 import api.model.AppUser;
@@ -35,7 +33,7 @@ public class JwtAuthServiceApp implements CommandLineRunner {
     admin.setUsername("admin");
     admin.setPassword("admin");
     admin.setEmail("admin@email.com");
-    admin.setAppUserRoles(new ArrayList<AppUserRole>(Arrays.asList(AppUserRole.ROLE_ADMIN)));
+    admin.setAppUserRole(AppUserRole.ROLE_ADMIN);
 
     userService.signup(admin);
 
@@ -43,7 +41,7 @@ public class JwtAuthServiceApp implements CommandLineRunner {
     client.setUsername("client");
     client.setPassword("client");
     client.setEmail("client@email.com");
-    client.setAppUserRoles(new ArrayList<AppUserRole>(Arrays.asList(AppUserRole.ROLE_USER)));
+    client.setAppUserRole(AppUserRole.ROLE_USER);
 
     userService.signup(client);
   }

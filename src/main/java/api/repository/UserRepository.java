@@ -1,18 +1,10 @@
 package api.repository;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import api.model.AppUser;
 
-public interface UserRepository extends JpaRepository<AppUser, Integer> {
+public interface UserRepository extends JpaRepository<AppUser, String> {
 
-  boolean existsByUsername(String username);
-
-  AppUser findByUsername(String username);
-
-  @Transactional
-  void deleteByUsername(String username);
 
 }

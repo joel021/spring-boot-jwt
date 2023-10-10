@@ -1,20 +1,19 @@
 package api.security;
 
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import api.model.AppUserRole;
+import api.service.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -39,14 +38,14 @@ public class JwtTokenProvider {
   private long validityInMilliseconds = 3600000; // 1h
 
   @Autowired
-  private MyUserDetails myUserDetails;
+  private AuthUserService authUserService;
 
   @PostConstruct
   protected void init() {
     secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
   }
 
-  public String createToken(String username, List<AppUserRole> appUserRoles) {
+  public String createToken(String username, Collection<? extends GrantedAuthority> appUserRoles) {
 
     Claims claims = Jwts.claims().setSubject(username);
     claims.put("auth", appUserRoles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
@@ -63,7 +62,7 @@ public class JwtTokenProvider {
   }
 
   public Authentication getAuthentication(String token) {
-    UserDetails userDetails = myUserDetails.loadUserByUsername(getUsername(token));
+    UserDetails userDetails = authUserService.loadUserByUsername(getUsername(token));
     return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
   }
 

@@ -2,6 +2,7 @@ package api.service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import api.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +16,8 @@ import api.model.AppUser;
 import api.repository.UserRepository;
 import api.security.JwtTokenProvider;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -24,43 +27,47 @@ public class UserService {
   private final JwtTokenProvider jwtTokenProvider;
   private final AuthenticationManager authenticationManager;
 
+  public String signin(AppUser appUser) {
+    return signin(appUser.getUsername(), appUser.getPassword());
+  }
+
   public String signin(String username, String password) {
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-      return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getAppUserRoles());
+      return jwtTokenProvider.createToken(username, userRepository.findById(username).get().getAuthorities());
     } catch (AuthenticationException e) {
       throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
     }
   }
 
   public String signup(AppUser appUser) {
-    if (!userRepository.existsByUsername(appUser.getUsername())) {
+    if (!userRepository.findById(appUser.getUsername()).isPresent()) {
       appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
       userRepository.save(appUser);
-      return jwtTokenProvider.createToken(appUser.getUsername(), appUser.getAppUserRoles());
+      return jwtTokenProvider.createToken(appUser.getUsername(), appUser.getAuthorities());
     } else {
       throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
     }
   }
 
   public void delete(String username) {
-    userRepository.deleteByUsername(username);
+    userRepository.deleteById(username);
   }
 
-  public AppUser search(String username) {
-    AppUser appUser = userRepository.findByUsername(username);
-    if (appUser == null) {
-      throw new CustomException("The user doesn't exist", HttpStatus.NOT_FOUND);
+  public AppUser findById(String username) throws ResourceNotFoundException {
+    Optional<AppUser> optionalAppUser = userRepository.findById(username);
+    if (optionalAppUser.isPresent()) {
+
     }
-    return appUser;
+    throw new ResourceNotFoundException("The user doesn't exist");
   }
 
   public AppUser whoami(HttpServletRequest req) {
-    return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
+    return userRepository.findById(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req))).get();
   }
 
   public String refresh(String username) {
-    return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getAppUserRoles());
+    return jwtTokenProvider.createToken(username, userRepository.findById(username).get().getAuthorities());
   }
 
 }
