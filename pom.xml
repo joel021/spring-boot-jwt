@@ -46,12 +46,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<dependency>
-			<!-- Make method based security testing easier -->
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<!-- Automatically restart whenever files on the classpath change -->
 			<groupId>org.springframework.boot</groupId>
@@ -96,6 +91,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -121,6 +122,43 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.2</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.10.3</version>
+
+				<executions>
+					<execution>
+						<id>pit-report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>mutationCoverage</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<targetClasses>
+						<param>api.model*</param>
+					</targetClasses>
+					<targetTests>
+						<param>api.model*</param>
+					</targetTests>
+					<outputFormats>
+						<outputFormat>HTML</outputFormat>
+					</outputFormats>
+					<withHistory>true</withHistory>
+				</configuration>
+
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>1.1.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

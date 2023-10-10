@@ -14,6 +14,13 @@ public class AppUserTests {
     }
 
     @Test
+    public void getAuthoritiesUserNullIsUserTest() {
+
+        AppUser appUser = new AppUser(UUID.randomUUID().toString(), "email@email.com", "password", true, null);
+        assertTrue(appUser.getAuthorities().contains(AppUserRole.ROLE_USER),"Assert user have USER as default role.");
+    }
+
+    @Test
     public void getAuthoritiesAdminContainsUserTest() {
 
         AppUser appUser = new AppUser(UUID.randomUUID().toString(), "email@email.com", "password", true, AppUserRole.ROLE_ADMIN);
@@ -32,7 +39,7 @@ public class AppUserTests {
 
         AppUser appUser = new AppUser(UUID.randomUUID().toString(), "email@email.com", "password", true, AppUserRole.ROLE_USER);
         AppUser appUserCopy = AppUser.instanceFrom(appUser);
-        assertEquals(appUserCopy.getUsername(), appUser.getUsername(), "Assert it returns the copy of the object");
+        assertEquals(appUser.getUsername(), appUserCopy.getUsername(), "Assert it returns the copy of the object");
     }
 
     @Test
@@ -40,6 +47,7 @@ public class AppUserTests {
 
         AppUser appUser = new AppUser(UUID.randomUUID().toString(), "email@email.com", "password", true, AppUserRole.ROLE_USER);
         AppUser appUserCopy = AppUser.instanceFrom(appUser);
-        assertNotEquals(appUserCopy, appUser, "Assert the instances are in different memory position.");
+        assertNotEquals(appUser, appUserCopy, "Assert the instances are in different memory position.");
     }
+
 }

@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +36,11 @@ public class AppUser implements UserDetails {
 
   private AppUserRole appUserRole;
   @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
+  public List<AppUserRole> getAuthorities() {
+
+    if (appUserRole == null) {
+      return Collections.singletonList(AppUserRole.ROLE_USER);
+    }
 
     List<AppUserRole> appUserRoles = new ArrayList<>();
 

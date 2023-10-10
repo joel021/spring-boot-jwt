@@ -351,6 +351,12 @@ $ mvn install
 $ mvn spring-boot:run
 ```
 
+5.1. Run mutant testing
+
+```
+$ mvn clean install org.pitest:pitest-maven:mutationCoverage
+```
+
 6. Navigate to `http://localhost:8080/swagger-ui.html` in your browser to check everything is working correctly. You can change the default port in the `application.yml` file
 
 ```yml
