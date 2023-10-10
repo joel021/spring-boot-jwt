@@ -1,13 +1,13 @@
-package murraco.security;
+package api.security;
 
 import lombok.RequiredArgsConstructor;
-import murraco.model.AppUser;
+import api.model.AppUser;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import murraco.repository.UserRepository;
+import api.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor

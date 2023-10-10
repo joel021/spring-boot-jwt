@@ -1,4 +1,4 @@
-package murraco.configuration;
+package api.configuration;
 
 import java.util.Arrays;
 import java.util.Collections;

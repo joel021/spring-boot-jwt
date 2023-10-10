@@ -1,4 +1,4 @@
-package murraco.model;
+package api.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,10 +12,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 @Entity
-@Data // Create getters and setters
+@Data
 @NoArgsConstructor
 public class AppUser {
 
@@ -28,6 +29,7 @@ public class AppUser {
   private String username;
 
   @Column(unique = true, nullable = false)
+  @Email
   private String email;
 
   @Size(min = 8, message = "Minimum password length: 8 characters")
