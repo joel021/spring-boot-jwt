@@ -27,27 +27,17 @@ public class StudentControllerTests {
     private MockMvc mockMvc;
     @Autowired
     private UserService userService;
-    private AppUser adminUser;
-    private AppUser userUser;
     private String adminToken;
     private String userToken;
 
 
     @BeforeEach
     public void setup() {
-
-        adminUser = new AppUser("adminUserName", "Admin@mail.com", "password", true, AppUserRole.ROLE_ADMIN);
-        adminToken = userService.signup(adminUser);
-
-        userUser = new AppUser("userUserName", "userUser@mail.com", "password", true, AppUserRole.ROLE_USER);
-        userToken = userService.signup(userUser);
+        
+        adminToken = userService.signup(new AppUser("adminUserName", "Admin@mail.com", "password", true, AppUserRole.ROLE_ADMIN));
+        userToken = userService.signup(new AppUser("userUserName", "userUser@mail.com", "password", true, AppUserRole.ROLE_USER));
     }
 
-    @AfterEach
-    public void afterEach() {
-        userService.delete(adminUser.getUsername());
-        userService.delete(userUser.getUsername());
-    }
 
     @Test
     public void findStudentByRegisterNotExistsTest() throws Exception {
