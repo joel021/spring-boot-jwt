@@ -27,9 +27,6 @@ public class UserService {
   private final JwtTokenProvider jwtTokenProvider;
   private final AuthenticationManager authenticationManager;
 
-  public String signin(AppUser appUser) {
-    return signin(appUser.getUsername(), appUser.getPassword());
-  }
 
   public String signin(String username, String password) {
     try {
@@ -41,10 +38,13 @@ public class UserService {
   }
 
   public String signup(AppUser appUser) {
+    return jwtTokenProvider.createToken(create(appUser));
+  }
+
+  public AppUser create(AppUser appUser) {
     if (!userRepository.findById(appUser.getUsername()).isPresent()) {
       appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
-      userRepository.save(appUser);
-      return jwtTokenProvider.createToken(appUser.getUsername(), appUser.getAuthorities());
+      return userRepository.save(appUser);
     } else {
       throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
     }

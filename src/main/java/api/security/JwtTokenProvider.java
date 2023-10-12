@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import api.model.AppUser;
 import api.model.AppUserRole;
 import api.service.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,10 @@ public class JwtTokenProvider {
   @PostConstruct
   protected void init() {
     secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+  }
+
+  public String createToken(AppUser appUser)  {
+      return createToken(appUser.getUsername(), appUser.getAuthorities());
   }
 
   public String createToken(String username, Collection<? extends GrantedAuthority> appUserRoles) {

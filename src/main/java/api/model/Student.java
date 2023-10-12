@@ -4,19 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.*;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class Student extends AppUser {
+public class Student {
 
     @Pattern(regexp = "[0-9]{3}[.][0-9]{3}[.][0-9]{3}-[0-9]{2}")
-    @Column(unique=true)
+    @Id
     private String register;
 
     @NotBlank(message = "You must provide the student name.")

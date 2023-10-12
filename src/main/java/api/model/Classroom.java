@@ -1,36 +1,44 @@
 package api.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Classroom {
 
     @Id
-    private String disciplineCode;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-    @ManyToOne
-    private Professor professor;
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    private AppUser owner;
 
-    @ManyToOne
+    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Discipline discipline;
 
-    @ManyToMany
-    private List<Student> students = new ArrayList<>();
-
+    @NotNull
+    @NotBlank
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Evaluation> evaluations = new ArrayList<>();
+
+    public static Classroom getInstanceFrom(Map<String, Object> fields) {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue (fields, Classroom.class);
+    }
+
 }

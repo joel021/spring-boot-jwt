@@ -44,10 +44,10 @@ public class RequestExceptionHandlerConfig extends ResponseEntityExceptionHandle
 
     @ExceptionHandler(ControllerException.class)
     public ResponseEntity<?> handleExceptions(ControllerException ex, WebRequest request) {
-        Map<String, String> body = new HashMap<>();
+        Map<String, Object> body = new HashMap<>();
 
         body.put("error", ex.getMessage());
-
+        body.put("errors", ex.getErrors());
         return new ResponseEntity<>(body, ex.getStatus());
     }
 }
