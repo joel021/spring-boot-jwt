@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
-public class ClassroomClassroomClassroomEvaluationServiceTests {
+public class ClassroomEvaluationServiceTests {
 
     @MockBean
     private ClassroomEvaluationRepository classroomEvaluationRepository;

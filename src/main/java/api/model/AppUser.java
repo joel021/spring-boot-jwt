@@ -78,6 +78,8 @@ public class AppUser implements UserDetails {
     userDatails.setAppUserRole(user.getAppUserRole());
     userDatails.setEnabled(user.isEnabled());
     userDatails.setEmail(user.getEmail());
+    userDatails.setName(user.getName());
+    userDatails.setPassword(user.getPassword());
 
     return userDatails;
   }

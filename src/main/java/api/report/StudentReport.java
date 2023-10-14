@@ -14,7 +14,7 @@ import java.util.List;
 public class StudentReport {
 
     private Student student;
-    List<StudentSummary> summaryList;
+    private List<StudentSummary> summaryList;
 
     public static List<StudentSummary> summaryFromListOfObjects(List<Object[]> listOfObects) {
 

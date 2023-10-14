@@ -28,14 +28,10 @@ import api.exception.CustomException;
 @Component
 public class JwtTokenProvider {
 
-  /**
-   * THIS IS NOT A SECURE PRACTICE! For simplicity, we are storing a static key here. Ideally, in a
-   * microservices environment, this key would be kept on a config-server.
-   */
-  @Value("${security.jwt.token.secret-key:secret-key}")
+  @Value("${security.jwt.token.secret-key}")
   private String secretKey;
 
-  @Value("${security.jwt.token.expire-length:3600000}")
+  @Value("${security.jwt.token.expire-length}")
   private long validityInMilliseconds = 3600000; // 1h
 
   @Autowired

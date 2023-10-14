@@ -1,9 +1,8 @@
 package api.service;
 
-import javax.servlet.http.HttpServletRequest;
-
 import api.exception.ResourceAlreadyExists;
 import api.exception.ResourceNotFoundException;
+import api.exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +11,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import api.exception.CustomException;
 import api.model.AppUser;
 import api.repository.UserRepository;
 import api.security.JwtTokenProvider;
@@ -29,12 +27,12 @@ public class UserService {
   private final AuthenticationManager authenticationManager;
 
 
-  public String signin(String username, String password) {
+  public String signin(String username, String password) throws UnauthorizedException {
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-      return jwtTokenProvider.createToken(username, userRepository.findById(username).get().getAuthorities());
-    } catch (AuthenticationException e) {
-      throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+      return jwtTokenProvider.createToken(username, findById(username).getAuthorities());
+    } catch (ResourceNotFoundException | AuthenticationException e) {
+      throw new UnauthorizedException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
     }
   }
 
@@ -61,14 +59,6 @@ public class UserService {
       return optionalAppUser.get();
     }
     throw new ResourceNotFoundException("The user doesn't exist");
-  }
-
-  public AppUser whoami(HttpServletRequest req) {
-    return userRepository.findById(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req))).get();
-  }
-
-  public String refresh(String username) {
-    return jwtTokenProvider.createToken(username, userRepository.findById(username).get().getAuthorities());
   }
 
 }
