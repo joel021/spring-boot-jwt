@@ -28,6 +28,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
   public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
     httpSecurity.cors().and().csrf().disable()
+            .headers().frameOptions().disable().and()
             .sessionManagement( (section) -> section.sessionCreationPolicy(SessionCreationPolicy.STATELESS) )
             .authorizeRequests( (auth) -> auth.antMatchers("/users/signin","/users/update/*",
                             "/h2-console/**/**","/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/configuration/**",

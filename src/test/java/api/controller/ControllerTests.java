@@ -1,5 +1,6 @@
 package api.controller;
 
+import api.exception.ResourceAlreadyExists;
 import api.model.AppUser;
 import api.model.AppUserRole;
 import api.service.UserService;
@@ -26,11 +27,11 @@ public class ControllerTests {
     AppUser adminUser;
     AppUser userUser;
 
-    public void setup() {
+    public void setup() throws ResourceAlreadyExists {
 
-        adminUser = new AppUser("adminUserName", "Admin@mail.com", "password",
+        adminUser = new AppUser("adminUserName","Professor 007", "Admin@mail.com", "password",
                 true, AppUserRole.ROLE_ADMIN);
-        userUser = new AppUser("userUserName", "userUser@mail.com",
+        userUser = new AppUser("userUserName", "Mr. Bean", "userUser@mail.com",
                 "password", true, AppUserRole.ROLE_USER);
 
         adminToken = userService.signup(adminUser);

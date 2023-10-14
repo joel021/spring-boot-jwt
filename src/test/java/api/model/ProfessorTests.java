@@ -6,8 +6,7 @@ public class ProfessorTests {
 
 
     @Test
-    public void getInstanceHasTest(AppUser appUser) {
-
+    public void getInstanceHasTest() {
 
     }
 }

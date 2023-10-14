@@ -1,5 +1,6 @@
 package api.controller;
 
+import api.exception.ResourceAlreadyExists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -12,7 +13,7 @@ public class StudentControllerTests extends ControllerTests {
 
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws ResourceAlreadyExists {
         super.setup();
     }
 

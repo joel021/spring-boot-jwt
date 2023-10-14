@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import java.util.*;
@@ -21,20 +20,15 @@ public class Classroom {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    private AppUser owner;
+    private AppUser professor;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Discipline discipline;
 
-    @NotNull
-    @NotBlank
-    private String name;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Evaluation> evaluations = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<ClassroomEvaluation> classroomEvaluations = new ArrayList<>();
 
     public static Classroom getInstanceFrom(Map<String, Object> fields) {
         ObjectMapper mapper = new ObjectMapper();

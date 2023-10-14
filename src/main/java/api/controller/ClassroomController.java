@@ -28,7 +28,7 @@ public class ClassroomController {
     public ResponseEntity<Classroom> create(@RequestBody @Valid Classroom classroom) throws NotAcceptedException {
 
         AppUser owner = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        classroom.setOwner(owner);
+        classroom.setProfessor(owner);
         return ResponseEntity.status(HttpStatus.CREATED).body(classroomService.create(classroom));
     }
 }

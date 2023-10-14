@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -24,6 +25,9 @@ public class AppUser implements UserDetails {
   @Size(min = 4, max = 255, message = "Minimum username length: 4 characters")
   @Column(unique = true, nullable = false)
   private String username;
+
+  @NotBlank
+  private String name;
 
   @Column(unique = true, nullable = false)
   @Email

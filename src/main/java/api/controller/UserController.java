@@ -2,6 +2,7 @@ package api.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import api.exception.ResourceAlreadyExists;
 import api.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import api.model.AppUser;
@@ -52,7 +53,7 @@ public class UserController {
       @ApiResponse(code = 400, message = "Something went wrong"), //
       @ApiResponse(code = 403, message = "Access denied"), //
       @ApiResponse(code = 422, message = "Username is already in use")})
-  public String signup(@ApiParam("Signup User") @RequestBody UserDataDTO user) {
+  public String signup(@ApiParam("Signup User") @RequestBody UserDataDTO user) throws ResourceAlreadyExists {
     return userService.signup(modelMapper.map(user, AppUser.class));
   }
 

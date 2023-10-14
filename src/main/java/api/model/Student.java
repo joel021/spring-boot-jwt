@@ -24,9 +24,7 @@ public class Student {
     @NotNull(message = "You must provide the student register.")
     private CourseLevel courseLevel;
 
-    @Min(message = "The min user score is 0.", value = 0)
-    @Max(message = "The max user score is 10.", value = 10)
-    private float score;
-
-
+    public Student(String register){
+        this.register = register;
+    }
 }

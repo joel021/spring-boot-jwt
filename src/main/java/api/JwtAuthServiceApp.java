@@ -29,6 +29,8 @@ public class JwtAuthServiceApp implements CommandLineRunner {
 
   @Override
   public void run(String... params) throws Exception {
+
+    /*
     AppUser admin = new AppUser();
     admin.setUsername("admin");
     admin.setPassword("admin");
@@ -44,6 +46,8 @@ public class JwtAuthServiceApp implements CommandLineRunner {
     client.setAppUserRole(AppUserRole.ROLE_USER);
 
     userService.signup(client);
+
+     */
   }
 
 }

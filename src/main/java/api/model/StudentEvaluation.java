@@ -1,19 +1,21 @@
 package api.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import javax.persistence.*;
+import java.util.UUID;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class StudentEvaluation {
 
     @Id
-    private Calendar dateTime = new GregorianCalendar();
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @ManyToOne
     private Student student;

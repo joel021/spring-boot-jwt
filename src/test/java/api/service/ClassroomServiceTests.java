@@ -1,10 +1,9 @@
 package api.service;
 
-import api.exception.ControllerException;
 import api.exception.NotAcceptedException;
-import api.exception.ResourceNotFoundException;
 import api.model.AppUser;
 import api.model.Classroom;
+import api.model.Discipline;
 import api.repository.ClassroomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,8 +33,8 @@ public class ClassroomServiceTests {
     @BeforeEach
     public void setup() {
 
-        classroomToCreate = new Classroom(null, new AppUser(), null, "mathematics", null);
-        classroomExpected = new Classroom(UUID.randomUUID(), null, null, "mathematics", null);
+        classroomToCreate = new Classroom(null, new AppUser(), new Discipline("GCET234", "Mathematics"), null);
+        classroomExpected = new Classroom(UUID.randomUUID(), null, new Discipline("GCET234", "Mathematics"), null);
         when(classroomRepository.save(classroomToCreate)).thenReturn(classroomExpected);
     }
 
@@ -49,7 +48,7 @@ public class ClassroomServiceTests {
     @Test
     public void createMissingOwnerTest() {
 
-        classroomToCreate.setOwner(null);
+        classroomToCreate.setProfessor(null);
         NotAcceptedException exception = assertThrows(NotAcceptedException.class, () -> {
             classroomService.create(classroomToCreate);
         });

@@ -14,7 +14,7 @@ public class ClassroomService {
 
     public Classroom create(Classroom classroom) throws NotAcceptedException {
 
-        if (classroom.getOwner() == null) {
+        if (classroom.getProfessor() == null) {
             throw new NotAcceptedException("The owner is required", null);
         }
 

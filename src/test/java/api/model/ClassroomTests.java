@@ -16,7 +16,7 @@ public class ClassroomTests {
     public void instanceOfEvaluations() {
 
         Classroom classroom = new Classroom();
-        assertTrue(classroom.getEvaluations().isEmpty(), "Assert the list of evaluations are instanced and empty.");
+        assertTrue(classroom.getClassroomEvaluations().isEmpty(), "Assert the list of evaluations are instanced and empty.");
     }
 
     @Test
@@ -39,23 +39,23 @@ public class ClassroomTests {
     public void getInstanceFromOnlyNameTest() {
 
         Map<String, Object> fields = new HashMap<>();
-        fields.put("name", "name");
+        fields.put("discipline", new Discipline("GCET-123", "Algorithms"));
         Classroom classroom = Classroom.getInstanceFrom(fields);
-        assertSame(classroom.getName(), fields.get("name"));
+        assertSame(classroom.getDiscipline().getCode(), "GCET-123");
     }
 
     @Test
-    public void getInstanceFromNameAndListTest() {
+    public void getInstanceFromDisciplineAndListTest() {
 
-        List<Evaluation> evaluationList = new ArrayList<>();
-        evaluationList.add(new Evaluation());
+        List<ClassroomEvaluation> classroomEvaluationList = new ArrayList<>();
+        classroomEvaluationList.add(new ClassroomEvaluation());
 
         Map<String, Object> fields = new HashMap<>();
-        fields.put("name", "name");
-        fields.put("evaluations", evaluationList);
+        fields.put("discipline", new Discipline("GCEPT-1234", "AI"));
+        fields.put("classroomEvaluations", classroomEvaluationList);
 
         Classroom classroom = Classroom.getInstanceFrom(fields);
-        assertNotNull(classroom.getEvaluations());
+        assertNotNull(classroom.getClassroomEvaluations());
     }
 
 

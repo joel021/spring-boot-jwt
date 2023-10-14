@@ -36,9 +36,9 @@ public class StudentServiceTests {
 
     @BeforeEach
     public void setup() {
-        studentFirstYear = new Student("register", "Student First Year", CourseLevel.FIRST_YEAR, 8.1f);
+        studentFirstYear = new Student("register", "Student First Year", CourseLevel.FIRST_YEAR);
         when(studentRepository.save(studentFirstYear)).thenReturn(studentFirstYear);
-        when(studentRepository.findByRegister(studentFirstYear.getRegister())).thenReturn(Optional.of(studentFirstYear));
+        when(studentRepository.findById(studentFirstYear.getRegister())).thenReturn(Optional.of(studentFirstYear));
     }
 
     @Test

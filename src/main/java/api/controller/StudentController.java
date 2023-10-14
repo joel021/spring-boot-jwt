@@ -2,6 +2,7 @@ package api.controller;
 
 import api.exception.ResourceNotFoundException;
 import api.model.Student;
+import api.report.StudentReport;
 import api.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +35,12 @@ public class StudentController {
     public ResponseEntity<Student> findStudentByRegister(@PathVariable String register) throws ResourceNotFoundException {
 
         return ResponseEntity.ok().body(studentService.findStudentByRegister(register));
+    }
+
+    @GetMapping("/report/{register}")
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    public ResponseEntity<StudentReport> getStudentReport() {
+
+        return null;
     }
 }

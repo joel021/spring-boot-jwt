@@ -2,6 +2,7 @@ package api.service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import api.exception.ResourceAlreadyExists;
 import api.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,16 +38,16 @@ public class UserService {
     }
   }
 
-  public String signup(AppUser appUser) {
+  public String signup(AppUser appUser) throws ResourceAlreadyExists {
     return jwtTokenProvider.createToken(create(appUser));
   }
 
-  public AppUser create(AppUser appUser) {
+  public AppUser create(AppUser appUser) throws ResourceAlreadyExists {
     if (!userRepository.findById(appUser.getUsername()).isPresent()) {
       appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
       return userRepository.save(appUser);
     } else {
-      throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
+      throw new ResourceAlreadyExists("Username is already in use");
     }
   }
 
@@ -57,7 +58,7 @@ public class UserService {
   public AppUser findById(String username) throws ResourceNotFoundException {
     Optional<AppUser> optionalAppUser = userRepository.findById(username);
     if (optionalAppUser.isPresent()) {
-
+      return optionalAppUser.get();
     }
     throw new ResourceNotFoundException("The user doesn't exist");
   }

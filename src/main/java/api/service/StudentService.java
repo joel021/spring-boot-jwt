@@ -2,6 +2,7 @@ package api.service;
 
 import api.exception.ResourceNotFoundException;
 import api.model.Student;
+import api.report.StudentReport;
 import api.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,18 @@ public class StudentService {
 
     public Student findStudentByRegister(String register) throws ResourceNotFoundException {
 
-        Optional<Student> optionalStudent = studentRepository.findByRegister(register);
+        Optional<Student> optionalStudent = studentRepository.findById(register);
 
         if (optionalStudent.isPresent()) {
             return optionalStudent.get();
         }
         throw new ResourceNotFoundException("Student not found.");
+    }
+
+    public StudentReport generateStudentReport(String register) throws ResourceNotFoundException {
+
+        Student student = findStudentByRegister(register);
+
+        return null;
     }
 }
