@@ -7,6 +7,7 @@ import api.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,7 +34,8 @@ public class StudentService {
     public StudentReport generateStudentReport(String register) throws ResourceNotFoundException {
 
         Student student = findStudentByRegister(register);
+        List<Object[]> studentSummariesObjects = studentRepository.summaryStudentById(student.getRegister());
 
-        return null;
+        return new StudentReport(student, StudentReport.summaryFromListOfObjects(studentSummariesObjects));
     }
 }

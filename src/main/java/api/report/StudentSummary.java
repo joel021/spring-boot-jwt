@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentSummary implements StudentSummaryInterface {
+public class StudentSummary {
 
     private String professorName;
     private String disciplineCode;

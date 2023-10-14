@@ -18,10 +18,18 @@ public class StudentReport {
 
     public static List<StudentSummary> summaryFromListOfObjects(List<Object[]> listOfObects) {
 
+        if (listOfObects == null) {
+            return null;
+        }
+
         List<StudentSummary> studentSummaries = new ArrayList<>();
         for(Object[] summary: listOfObects) {
-            studentSummaries.add(new StudentSummary((String) summary[0], (String) summary[1], (String) summary[2], (float) summary[3]));
+
+            float meanUnits = summary[3] != null ? (float) summary[3] : 0f;
+            studentSummaries.add(new StudentSummary((String) summary[0], (String) summary[1], (String) summary[2], meanUnits));
         }
         return studentSummaries;
     }
+
+
 }

@@ -5,6 +5,7 @@ import api.model.Student;
 import api.report.StudentReport;
 import api.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,9 @@ public class StudentController {
 
     @GetMapping("/report/{register}")
     @PreAuthorize("hasRole('ROLE_PROFESSOR')")
-    public ResponseEntity<StudentReport> getStudentReport() {
+    public ResponseEntity<StudentReport> getStudentReport(@PathVariable String register) throws ResourceNotFoundException {
 
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(studentService.generateStudentReport(register));
     }
+
 }
