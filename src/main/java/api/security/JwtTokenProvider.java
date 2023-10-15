@@ -32,7 +32,7 @@ public class JwtTokenProvider {
   private String secretKey;
 
   @Value("${security.jwt.token.expire-length}")
-  private long validityInMilliseconds = 3600000; // 1h
+  private long validityInMilliseconds;
 
   @Autowired
   private AuthUserService authUserService;
@@ -43,10 +43,17 @@ public class JwtTokenProvider {
   }
 
   public String createToken(AppUser appUser)  {
+      if (appUser == null){
+        return null;
+      }
       return createToken(appUser.getUsername(), appUser.getAuthorities());
   }
 
   public String createToken(String username, Collection<? extends GrantedAuthority> appUserRoles) {
+
+    if (username == null || appUserRoles == null || appUserRoles.isEmpty()) {
+      return null;
+    }
 
     Claims claims = Jwts.claims().setSubject(username);
     claims.put("auth", appUserRoles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
@@ -54,15 +61,16 @@ public class JwtTokenProvider {
     Date now = new Date();
     Date validity = new Date(now.getTime() + validityInMilliseconds);
 
-    return Jwts.builder()//
-        .setClaims(claims)//
-        .setIssuedAt(now)//
-        .setExpiration(validity)//
-        .signWith(SignatureAlgorithm.HS256, secretKey)//
+    return Jwts.builder()
+        .setClaims(claims)
+        .setIssuedAt(now)
+        .setExpiration(validity)
+        .signWith(SignatureAlgorithm.HS256, secretKey)
         .compact();
   }
 
   public Authentication getAuthentication(String token) {
+
     UserDetails userDetails = authUserService.loadUserByUsername(getUsername(token));
     return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
   }
@@ -71,8 +79,8 @@ public class JwtTokenProvider {
     return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
   }
 
-  public String resolveToken(HttpServletRequest req) {
-    String bearerToken = req.getHeader("Authorization");
+  public String resolveToken(String bearerToken) {
+
     if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
       return bearerToken.substring(7);
     }
@@ -80,12 +88,17 @@ public class JwtTokenProvider {
   }
 
   public boolean validateToken(String token) {
+
     try {
       Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
       return true;
     } catch (JwtException | IllegalArgumentException e) {
-      throw new CustomException("Expired or invalid JWT token", HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new CustomException("Expired or invalid JWT token", HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  public String getSecretKey() {
+    return secretKey;
   }
 
 }

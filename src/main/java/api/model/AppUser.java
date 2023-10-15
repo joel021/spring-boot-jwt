@@ -37,8 +37,8 @@ public class AppUser implements UserDetails {
   private String password;
 
   private boolean enabled;
-
   private AppUserRole appUserRole;
+
   @Override
   public List<AppUserRole> getAuthorities() {
 

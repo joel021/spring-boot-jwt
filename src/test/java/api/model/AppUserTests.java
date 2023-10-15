@@ -42,12 +42,44 @@ public class AppUserTests {
         assertEquals(appUser.getUsername(), appUserCopy.getUsername(), "Assert it returns the copy of the object");
     }
 
-    @Test
-    public void instanceFromAssertDifferentMemoryReference() {
 
-        AppUser appUser = new AppUser(UUID.randomUUID().toString(),"Tester", "email@email.com", "password", true, AppUserRole.ROLE_USER);
+    @Test
+    public void instanceFromAssertName() {
+
+        AppUser appUser = new AppUser(UUID.randomUUID().toString(), "Tester","email@email.com", "password", true, AppUserRole.ROLE_USER);
         AppUser appUserCopy = AppUser.instanceFrom(appUser);
-        assertNotEquals(appUser, appUserCopy, "Assert the instances are in different memory position.");
+        assertEquals(appUser.getName(), appUserCopy.getName(), "Assert it returns the copy of the object");
     }
 
+    @Test
+    public void instanceFromAssertEmail() {
+
+        AppUser appUser = new AppUser(UUID.randomUUID().toString(), "Tester","email@email.com", "password", true, AppUserRole.ROLE_USER);
+        AppUser appUserCopy = AppUser.instanceFrom(appUser);
+        assertEquals(appUser.getEmail(), appUserCopy.getEmail(), "Assert it returns the copy of the object");
+    }
+
+    @Test
+    public void instanceFromAssertPassword() {
+
+        AppUser appUser = new AppUser(UUID.randomUUID().toString(), "Tester","email@email.com", "password", true, AppUserRole.ROLE_USER);
+        AppUser appUserCopy = AppUser.instanceFrom(appUser);
+        assertEquals(appUser.getPassword(), appUserCopy.getPassword(), "Assert it returns the copy of the object");
+    }
+
+    @Test
+    public void instanceFromAssertEnabled() {
+
+        AppUser appUser = new AppUser(UUID.randomUUID().toString(), "Tester","email@email.com", "password", true, AppUserRole.ROLE_USER);
+        AppUser appUserCopy = AppUser.instanceFrom(appUser);
+        assertEquals(appUser.isEnabled(), appUserCopy.isEnabled(), "Assert it returns the copy of the object");
+    }
+
+    @Test
+    public void instanceFromAssertRole() {
+
+        AppUser appUser = new AppUser(UUID.randomUUID().toString(), "Tester","email@email.com", "password", true, AppUserRole.ROLE_USER);
+        AppUser appUserCopy = AppUser.instanceFrom(appUser);
+        assertEquals(appUser.getAuthorities(), appUserCopy.getAuthorities(), "Assert it returns the copy of the object");
+    }
 }
