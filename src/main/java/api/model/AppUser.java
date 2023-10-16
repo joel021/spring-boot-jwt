@@ -3,7 +3,6 @@ package api.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
@@ -29,7 +28,7 @@ public class AppUser implements UserDetails {
   @NotBlank
   private String name;
 
-  @Column(unique = true, nullable = false)
+  @Column(nullable = false)
   @Email
   private String email;
 

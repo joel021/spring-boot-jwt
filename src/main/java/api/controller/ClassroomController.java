@@ -10,11 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/classroom")
@@ -31,4 +30,22 @@ public class ClassroomController {
         classroom.setProfessor(owner);
         return ResponseEntity.status(HttpStatus.CREATED).body(classroomService.create(classroom));
     }
+
+    @PreAuthorize("hasRole('ROLE_PROFESSOR')")
+    @GetMapping("/")
+    public ResponseEntity<List<Classroom>> findAllOfProfessor() {
+
+        AppUser professor = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok().body(classroomService.findClassroomsByProfessor(professor));
+    }
+
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    @GetMapping("/professor/{username}")
+    public ResponseEntity<List<Classroom>> findByProfessor(@PathVariable String username) {
+
+        AppUser professor = new AppUser();
+        professor.setUsername(username);
+        return ResponseEntity.status(HttpStatus.OK).body(classroomService.findClassroomsByProfessor(professor));
+    }
+
 }

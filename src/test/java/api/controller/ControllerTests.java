@@ -1,6 +1,7 @@
 package api.controller;
 
 import api.exception.ResourceAlreadyExists;
+import api.exception.UnauthorizedException;
 import api.model.AppUser;
 import api.model.AppUserRole;
 import api.service.UserService;
@@ -13,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 public class ControllerTests {
 
@@ -23,19 +24,22 @@ public class ControllerTests {
     UserService userService;
 
     String adminToken;
+    String professorToken;
     String userToken;
     AppUser adminUser;
+    AppUser professorUser;
     AppUser userUser;
 
     public void setup() throws ResourceAlreadyExists {
 
-        adminUser = new AppUser("adminUserName","Professor 007", "Admin@mail.com", "password",
+        adminUser = new AppUser("adminUsername","Professor 007", "Admin@mail.com", "password",
                 true, AppUserRole.ROLE_ADMIN);
-        userUser = new AppUser("userUserName", "Mr. Bean", "userUser@mail.com",
+        userUser = new AppUser("userUsername", "Mr. Bean", "userUser@mail.com",
                 "password", true, AppUserRole.ROLE_USER);
-
-        adminToken = userService.signup(adminUser);
-        userToken = userService.signup(userUser);
-
+        professorUser = new AppUser("professorUsername", "Mr. Bean", "professor@mail.com",
+                "password", true, AppUserRole.ROLE_PROFESSOR);
+        adminToken = userService.signinOrsignup(adminUser);
+        userToken = userService.signinOrsignup(userUser);
+        professorToken = userService.signinOrsignup(professorUser);
     }
 }

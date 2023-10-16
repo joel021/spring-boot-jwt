@@ -29,4 +29,11 @@ public class AppUserRoleTests {
         List<AppUserRole> values = Arrays.asList(AppUserRole.values());
         assertTrue(values.contains(AppUserRole.ROLE_ADMIN), "Assert the roles set contains ADMIN");
     }
+
+    @Test
+    public void hasProfessorTest() {
+
+        List<AppUserRole> values = Arrays.asList(AppUserRole.values());
+        assertTrue(values.contains(AppUserRole.ROLE_PROFESSOR), "Assert the roles set contains ROLE_PROFESSOR");
+    }
 }

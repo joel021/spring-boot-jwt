@@ -40,6 +40,15 @@ public class UserService {
     return jwtTokenProvider.createToken(create(appUser));
   }
 
+  public String signinOrsignup(AppUser appUser) throws ResourceAlreadyExists {
+
+    try {
+        return signin(appUser.getUsername(), appUser.getPassword());
+    } catch (UnauthorizedException e) {
+      return signup(appUser);
+    }
+  }
+
   public AppUser create(AppUser appUser) throws ResourceAlreadyExists {
     if (!userRepository.findById(appUser.getUsername()).isPresent()) {
       appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
