@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 public class ClassroomRepositoryTests {
 
@@ -25,10 +25,6 @@ public class ClassroomRepositoryTests {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private DisciplineRepository disciplineRepository;
-
 
     private Classroom classroomExistent;
 
@@ -41,9 +37,8 @@ public class ClassroomRepositoryTests {
         professor = new AppUser("profesor-1", "Professor", "professor@professor.com",
                 "i_am_a_professor_hahaha", true, AppUserRole.ROLE_PROFESSOR);
         userRepository.save(professor);
-        Discipline discipline = disciplineRepository.save(new Discipline("GCET-3421",
-                "Systematic Testing2"));
-        //classroomExistent = classroomRepository.save(new Classroom(null, professor, discipline, null));
+        classroomExistent = classroomRepository.saveAndFlush(new Classroom(null, professor, new Discipline("GCET-3421",
+                "Systematic Testing2"), null));
     }
 
     @Test
