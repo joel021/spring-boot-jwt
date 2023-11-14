@@ -1,6 +1,6 @@
 package api.controller;
 
-import api.exception.ResourceAlreadyExists;
+import exception.ResourceAlreadyExists;
 import api.model.CourseLevel;
 import api.model.Student;
 import api.repository.StudentRepository;

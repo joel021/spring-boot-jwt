@@ -2,6 +2,7 @@ package api.service;
 
 import api.model.Discipline;
 import api.repository.DisciplineRepository;
+import api.service.DisciplineService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

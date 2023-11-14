@@ -1,10 +1,9 @@
 package api.controller;
 
-import api.exception.ResourceAlreadyExists;
-import api.exception.UnauthorizedException;
-import api.model.AppUser;
-import api.model.AppUserRole;
-import api.service.UserService;
+import exception.ResourceAlreadyExists;
+import auth.model.AppUser;
+import auth.model.AppUserRole;
+import auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

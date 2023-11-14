@@ -1,5 +1,6 @@
 package api.model;
 
+import auth.model.AppUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;

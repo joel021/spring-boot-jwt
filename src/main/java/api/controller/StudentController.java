@@ -1,6 +1,6 @@
 package api.controller;
 
-import api.exception.ResourceNotFoundException;
+import exception.ResourceNotFoundException;
 import api.model.Student;
 import api.report.StudentReport;
 import api.service.StudentService;

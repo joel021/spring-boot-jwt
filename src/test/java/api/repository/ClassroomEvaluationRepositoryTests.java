@@ -1,6 +1,7 @@
 package api.repository;
 
 import api.model.ClassroomEvaluation;
+import api.repository.ClassroomEvaluationRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

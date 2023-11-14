@@ -1,6 +1,7 @@
 package api.repository;
 
 import api.model.Discipline;
+import api.repository.DisciplineRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

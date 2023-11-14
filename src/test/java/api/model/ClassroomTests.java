@@ -1,5 +1,8 @@
 package api.model;
 
+import api.model.Classroom;
+import api.model.ClassroomEvaluation;
+import api.model.Discipline;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

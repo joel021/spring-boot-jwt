@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<start-class>api.JwtAuthServiceApp</start-class>
+		<start-class>auth.JwtAuthServiceApp</start-class>
 		<junit.jupiter.version>5.9.1</junit.jupiter.version>
 		<junit.platform.version>1.9.1</junit.platform.version>
 	</properties>
@@ -156,10 +156,10 @@
 
 				<configuration>
 					<targetClasses>
-						<param>api.model*</param>
+						<param>auth.model*</param>
 					</targetClasses>
 					<targetTests>
-						<param>api.model*</param>
+						<param>auth.model*</param>
 					</targetTests>
 					<outputFormats>
 						<outputFormat>HTML</outputFormat>

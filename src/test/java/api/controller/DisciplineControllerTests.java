@@ -1,7 +1,7 @@
 package api.controller;
 
 
-import api.exception.ResourceAlreadyExists;
+import exception.ResourceAlreadyExists;
 import api.model.Discipline;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

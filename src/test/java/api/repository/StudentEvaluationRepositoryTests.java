@@ -3,6 +3,8 @@ package api.repository;
 import api.model.CourseLevel;
 import api.model.Student;
 import api.model.StudentEvaluation;
+import api.repository.StudentEvaluationRepository;
+import api.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

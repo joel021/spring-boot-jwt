@@ -1,8 +1,9 @@
 package api.service;
 
-import api.exception.NotAcceptedException;
-import api.model.AppUser;
-import api.model.AppUserRole;
+import api.service.ClassroomService;
+import exception.NotAcceptedException;
+import auth.model.AppUser;
+import auth.model.AppUserRole;
 import api.model.Classroom;
 import api.model.Discipline;
 import api.repository.ClassroomRepository;

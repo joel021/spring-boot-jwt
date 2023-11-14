@@ -1,7 +1,7 @@
 package api.service;
 
-import api.exception.NotAcceptedException;
-import api.model.AppUser;
+import exception.NotAcceptedException;
+import auth.model.AppUser;
 import api.model.Classroom;
 import api.repository.ClassroomRepository;
 import org.springframework.beans.factory.annotation.Autowired;

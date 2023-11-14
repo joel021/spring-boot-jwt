@@ -1,9 +1,11 @@
 package api.repository;
 
-import api.model.AppUser;
-import api.model.AppUserRole;
+import api.repository.ClassroomRepository;
+import auth.model.AppUser;
+import auth.model.AppUserRole;
 import api.model.Classroom;
 import api.model.Discipline;
+import auth.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

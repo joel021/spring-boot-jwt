@@ -1,6 +1,6 @@
 package api.repository;
 
-import api.model.AppUser;
+import auth.model.AppUser;
 import api.model.Classroom;
 import org.springframework.data.jpa.repository.JpaRepository;
 

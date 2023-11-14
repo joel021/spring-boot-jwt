@@ -1,7 +1,6 @@
 package api.repository;
 
 import api.model.Student;
-import api.report.StudentSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
